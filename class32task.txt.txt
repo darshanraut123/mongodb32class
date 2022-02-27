@@ -1,0 +1,122 @@
+use zenclass;
+
+db.users.insertMany([{
+	name:"darshan",
+	mentors:"nagrajan",
+	attendance:70,
+	tasks:18,
+	topics:["nodejs","reactjs","expressjs"],
+	company_drives:["infosys","persistent"],
+	codekata:1432
+},{
+	name:"akshay",
+	mentors:"puja",
+	attendance:45,
+	tasks:23,
+	topics:["nodejs","reactjs","expressjs"],
+	company_drives:["infosys","wipro"],
+	codekata:122
+},{
+	name:"ashish",
+	mentors:"manish",
+	attendance:62,
+	tasks:32,
+	topics:["nodejs","reactjs","expressjs"],
+	company_drives:["wipro","persistent"],
+	codekata:543
+},{
+	name:"nikhil",
+	mentors:"vikram",
+	attendance:84,
+	tasks:25,
+	topics:["nodejs","reactjs","expressjs"],
+	company_drives:["tech_manindra","persistent"],
+	codekata:431
+}]);
+
+db.topics.insertMany([{
+	topic_name:"nodejs",
+	startDate: new Date("2020-10-17"),
+	mentor:"nagrajan"
+},{
+	topic_name:"reactjs",
+	startDate: new Date("2020-05-12"),
+	mentor:"anantkumar"
+},{
+	topic_name:"expressjs",
+	startDate: new Date("2020-10-22"),
+	mentor:"atul"
+},{
+	topic_name:"html",
+	startDate: new Date("2020-08-02"),
+	mentor:"puja"
+},{
+	topic_name:"javascript",
+	startDate: new Date("2020-10-09"),
+	mentor:"vikram"
+}]);
+
+db.company.insertMany([{
+	name:"infosys",
+	driveDate:new Date("2020-10-25"),
+	takePart: 100
+},{
+	name:"wipro",
+	driveDate:new Date("2020-10-10"),
+	takePart: 200
+},{
+	name:"tech mahindra",
+	driveDate:new Date("2020-10-16"),
+	takePart: 300
+},{
+	name:"persistent",
+	driveDate:new Date("2020-10-03"),
+	takePart: 400
+}
+]);
+
+
+db.mentors.insertMany([{
+	name:"nagrajan",
+	subject:"nodejs",
+	mentee:7
+},{
+	name:"anantkumar",
+	subject:"reactjs",
+	mentee:32
+},{
+	name:"atul",
+	subject:"expressjs",
+	mentee:6
+},{
+	name:"puja",
+	subject:"html",
+	mentee:11
+},{
+	name:"shubham",
+	subject:"css",
+	mentee:17
+},{
+	name:"manish",
+	subject:"javascript",
+	mentee:43
+}]);
+
+
+1) Find all the topics and tasks which are thought in the month of October
+db.topics.find({$and:[{startDate:{$lt:new Date("2020-11-01")}},{startDate:{$gt:new Date("2020-09-30")}}]});
+
+2) Find all the company drives which appeared between 15 oct-2020 and 31-oct-2020
+db.company.find({$and:[{driveDate:{$gt:new Date("2020-10-15")}},{driveDate:{$lt:new Date("2020-10-31")}}]});
+
+3) Find all the company drives and students who are appeared for the placement.
+db.company.find({},{name:1,_id:0,takePart:1,name:1}).pretty();
+
+4) Find the number of problems solved by the user in codekata
+db.users.find({name:"darshan"},{codekata:1,_id:0});
+
+5) Find all the mentors with who has the mentee's count more than 15
+db.mentors.find({mentee:{$gt:15}},{name:1,_id:0}).pretty();
+
+6) Find the number of users who are absent and task is not submitted  between 15 oct-2020 and 31-oct-2020
+Did not understand
